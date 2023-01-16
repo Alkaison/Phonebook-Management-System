@@ -117,31 +117,31 @@ void userLogin()
     printf("---------------------------------- \n");
     printf("   >>> User Profile Login  <<< \n");
     printf("---------------------------------- \n\n");
-	printf("Enter your password & Hit ENTER: ");
+    printf("Enter your password & Hit ENTER: ");
 
     while(1)
     {
-		ch = getch(); // get single character at one time & validate it 
+	ch = getch(); // get single character at one time & validate it 
 
-		if(ch == ENTER || ch == TAB)
+	if(ch == ENTER || ch == TAB)
         {
-			inputPassword[i] = '\0';
-			break;
-		}
+		inputPassword[i] = '\0';
+		break;
+	}
         else if(ch == BKSP)
         {
-			if(i > 0)
-            {
-				i--;
-				printf("\b \b"); // for backspace
-			}
-		}
-        else
-        {
-			inputPassword[i++] = ch;
-			printf("* \b");	// to replace password character with * 
+		if(i > 0)
+            	{
+			i--;
+			printf("\b \b"); // for backspace
 		}
 	}
+        else
+        {
+		inputPassword[i++] = ch;
+		printf("* \b");	// to replace password character with * 
+	}
+    }
 
     fflush(stdin);
     printf("\n");
@@ -165,30 +165,30 @@ void adminLogin()
     printf("----------------------------------- \n");
     printf("   >>> Administrator Login  <<< \n");
     printf("----------------------------------- \n\n");
-	printf("Enter your password & Hit ENTER: ");
-	while(1)
+    printf("Enter your password & Hit ENTER: ");
+    while(1)
     {
-		ch = getch(); // get single character at one time & validate it 
+	ch = getch(); // get single character at one time & validate it 
 
-		if(ch == ENTER || ch == TAB)
+	if(ch == ENTER || ch == TAB)
         {
-			inputPassword[i] = '\0';
-			break;
-		}
+		inputPassword[i] = '\0';
+		break;
+	}
         else if(ch == BKSP)
         {
-			if(i > 0)
-            {
-				i--;
-				printf("\b \b"); // for backspace
-			}
-		}
-        else
-        {
-			inputPassword[i++] = ch;
-			printf("* \b");	// to replace password character with * 
+		if(i > 0)
+            	{
+			i--;
+			printf("\b \b"); // for backspace
 		}
 	}
+        else
+        {
+		inputPassword[i++] = ch;
+		printf("* \b");	// to replace password character with * 
+	}
+    }
 
     fflush(stdin);
     printf("\n");
