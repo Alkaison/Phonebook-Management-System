@@ -206,14 +206,14 @@ void adminLogin()
 void userPanel()
 {
     clearBuffer();
-    printf("-------------------------------- \n");
+    printf("----------------------------------- \n");
     printf("\t>>> User Panel <<< \n");
-    printf("-------------------------------- \n");
+    printf("----------------------------------- \n");
     printf("[1] Display All Contact. \n");
     printf("[2] Search By Name. \n");
     printf("[3] Search By Number. \n");
     printf("[4] Logout. \n");
-    printf("-------------------------------- \n\n");
+    printf("----------------------------------- \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
     
