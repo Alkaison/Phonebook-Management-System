@@ -1,5 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+#include<conio.h>
+
+// define constants 
+#define MAX_LENGTH 255
+#define ENTER 13
+#define TAB 9
+#define BKSP 8
+
+// global variables 
+char adminPassword[MAX_LENGTH] = "Admin";
+char userName[MAX_LENGTH];
+int choice = 0;
 
 // Function Prototypes or Function Declaration 
 // informative functions 
@@ -7,6 +20,7 @@ void loginPage();
 void endScreen();
 
 // login password functions 
+void getUsername();
 void userLogin();
 void adminLogin();
 
@@ -30,20 +44,20 @@ void searchByNumber();
 
 int main(){
 
-    loginPage();
+    getUsername();
     return 0;
 }
 
 void loginPage()
 {
     clearBuffer();
-    int choice;
-    printf("-------------------------------- \n");
-    printf(">>> Login into system as <<< \n");
-    printf("-------------------------------- \n");
-    printf("[1] Admin \n");
-    printf("[2] User \n");
-    printf("-------------------------------- \n\n");
+    printf("----------------------------------- \n");
+    printf("   >>> Login into system as <<< \n");
+    printf("----------------------------------- \n");
+    printf("[1] Administrator \n");
+    printf("[2] User profile \n");
+    printf("[3] Exit system \n");
+    printf("----------------------------------- \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
 
@@ -55,9 +69,12 @@ void loginPage()
         case 2:
             userLogin();
             break;
+        case 3:
+            endScreen();
+            break;
         default:
             printf("ERROR: Invalid input please try again. \n");
-            Sleep(1500);
+            system("pause");
             loginPage();
     }
 }
@@ -78,22 +95,73 @@ void endScreen()
     exit(0);
 }
 
+void getUsername()
+{
+    clearBuffer();
+    printf("------------------------------------------- \n");
+    printf("   >>> Phonebook Management System  <<< \n");
+    printf("------------------------------------------- \n\n");
+    printf("Enter Username: ");
+    scanf(" %s",&userName);
+    fflush(stdin);
+    loginPage();
+}
+
 void userLogin()
 {
     clearBuffer();
+
 }
 
 void adminLogin()
 {
     clearBuffer();
+    char inputPassword[255], ch;
+    int i = 0;
+
+	printf("Enter your password & Hit ENTER: ");
+	while(1)
+    {
+		ch = getch(); // get single character at one time & validate it 
+
+		if(ch == ENTER || ch == TAB)
+        {
+			inputPassword[i] = '\0';
+			break;
+		}
+        else if(ch == BKSP)
+        {
+			if(i > 0)
+            {
+				i--;
+				printf("\b \b"); // for backspace
+			}
+		}
+        else
+        {
+			inputPassword[i++] = ch;
+			printf("* \b");	// to replace password character with * 
+		}
+	}
+
+    fflush(stdin);
+    printf("\n");
+    // verifies the password 
+    if(strcmp(adminPassword, inputPassword) == 0)
+        adminPanel();
+    else
+    {
+        printf("ERROR: Invalid password please try again. \n");
+        system("pause");
+        loginPage();
+    }
 }
 
 void userPanel()
 {
     clearBuffer();
-    int choice;
     printf("-------------------------------- \n");
-    printf(">>> User Panel <<< \n");
+    printf("\t>>> User Panel <<< \n");
     printf("-------------------------------- \n");
     printf("[1] Display All Contact. \n");
     printf("[2] Search By Name. \n");
@@ -119,7 +187,7 @@ void userPanel()
             break;
         default:
             printf("ERROR: Invalid input please try again. \n");
-            Sleep(1500);
+            system("pause");
             userPanel();
     }
 }
@@ -127,10 +195,9 @@ void userPanel()
 void adminPanel()
 {
     clearBuffer();
-    int choice;
-    printf("-------------------------------- \n");
-    printf(">>> Admin Panel <<< \n");
-    printf("-------------------------------- \n");
+    printf("------------------------------------ \n");
+    printf("\t>>> Admin Panel <<< \n");
+    printf("------------------------------------ \n");
     printf("[1] Add New Contact. \n");
     printf("[2] Update Contact. \n");
     printf("[3] Display All Contact. \n");
@@ -139,7 +206,7 @@ void adminPanel()
     printf("[6] Delete Contact. \n");
     printf("[7] Delete All Contact. \n");
     printf("[8] Logout. \n");
-    printf("-------------------------------- \n\n");
+    printf("------------------------------------ \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
 
@@ -171,7 +238,7 @@ void adminPanel()
             break;
         default:
             printf("ERROR: Invalid input please try again. \n");
-            Sleep(1500);
+            system("pause");
             adminPanel();
     }
 }
@@ -188,7 +255,7 @@ void isValidNumber()
 
 void clearBuffer()
 {
-    system("clear");
+    system("cls");
     fflush(stdin);
 }
 
