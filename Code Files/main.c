@@ -15,9 +15,9 @@ void userPanel();
 void adminPanel();
 
 // validation functions 
-void checkPassword();
 void isValidGender();
 void isValidNumber();
+void clearBuffer();
 
 // operational functions 
 void addNewContact();
@@ -36,13 +36,15 @@ int main(){
 
 void loginPage()
 {
+    clearBuffer();
     int choice;
     printf("-------------------------------- \n");
     printf(">>> Login into system as <<< \n");
     printf("-------------------------------- \n");
     printf("[1] Admin \n");
     printf("[2] User \n");
-    printf("-------------------------------- \n");
+    printf("-------------------------------- \n\n");
+    printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
 
     switch (choice)
@@ -62,6 +64,7 @@ void loginPage()
 
 void endScreen()
 {
+    clearBuffer();
     printf("-------------------------------- \n");
     printf(">>> Team Members <<< \n");
     printf("-------------------------------- \n");
@@ -77,16 +80,17 @@ void endScreen()
 
 void userLogin()
 {
-    
+    clearBuffer();
 }
 
 void adminLogin()
 {
-    
+    clearBuffer();
 }
 
 void userPanel()
 {
+    clearBuffer();
     int choice;
     printf("-------------------------------- \n");
     printf(">>> User Panel <<< \n");
@@ -95,7 +99,7 @@ void userPanel()
     printf("[2] Search By Name. \n");
     printf("[3] Search By Number. \n");
     printf("[4] Logout. \n");
-    printf("-------------------------------- \n");
+    printf("-------------------------------- \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
     
@@ -118,11 +122,11 @@ void userPanel()
             Sleep(1500);
             userPanel();
     }
-    
 }
 
 void adminPanel()
 {
+    clearBuffer();
     int choice;
     printf("-------------------------------- \n");
     printf(">>> Admin Panel <<< \n");
@@ -136,7 +140,7 @@ void adminPanel()
     printf("[7] Delete All Contact. \n");
     printf("[8] Logout. \n");
     printf("-------------------------------- \n\n");
-    printf("Enter the numbers choice & Hit ENTER: ");
+    printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
 
     switch (choice)
@@ -172,16 +176,6 @@ void adminPanel()
     }
 }
 
-void loginPassword()
-{
-    
-}
-
-void checkPassword()
-{
-
-}
-
 void isValidGender()
 {
 
@@ -192,25 +186,15 @@ void isValidNumber()
 
 }
 
+void clearBuffer()
+{
+    system("clear");
+    fflush(stdin);
+}
+
 void addNewContact()
 {
-    int number;
-    char fname,lname,city,Gender;
-    printf("Enter Phone Number:\n");
-    scanf("%d",&number);
-    printf("Enter First Name:\n");
-    scanf("%s",&fname);
-    printf("Enter last Name:\n");
-    scanf("%s",&lname);
-    printf("Enter city name:\n");
-    scanf("%s",&city);
-    printf("Enter Gender");
-    if( 'm' || 'M' || 'f' || 'F')
-    {
-        scanf("%c",&Gender);
-    }
-    
-
+  
 }
 
 void updateContact()
