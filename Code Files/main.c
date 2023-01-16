@@ -91,13 +91,14 @@ void userPanel()
     printf("-------------------------------- \n");
     printf(">>> User Panel <<< \n");
     printf("-------------------------------- \n");
-
     printf("[1] Display All Contact. \n");
     printf("[2] Search By Name. \n");
     printf("[3] Search By Number. \n");
+    printf("[4] Logout. \n");
     printf("-------------------------------- \n");
-    printf("Enter the numbers choice & Hit ENTER: ");
+    printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
+    
     switch (choice)
     {
         case 1:
@@ -109,10 +110,13 @@ void userPanel()
         case 3:
             searchByNumber();
             break;
-
+        case 4:
+            endScreen();
+            break;
         default:
             printf("ERROR: Invalid input please try again. \n");
             Sleep(1500);
+            userPanel();
     }
     
 }
@@ -130,6 +134,7 @@ void adminPanel()
     printf("[5] Search By Number. \n");
     printf("[6] Delete Contact. \n");
     printf("[7] Delete All Contact. \n");
+    printf("[8] Logout. \n");
     printf("-------------------------------- \n\n");
     printf("Enter the numbers choice & Hit ENTER: ");
     scanf("%d",&choice);
@@ -156,10 +161,14 @@ void adminPanel()
             break;
         case 7:
             deleteAllContact();
-            break;                           
+            break;
+        case 8:
+            endScreen();
+            break;
         default:
             printf("ERROR: Invalid input please try again. \n");
             Sleep(1500);
+            adminPanel();
     }
 }
 
@@ -186,13 +195,20 @@ void isValidNumber()
 void addNewContact()
 {
     int number;
-    char name,city;
-    printf("Enter Phone Number\n");
+    char fname,lname,city,Gender;
+    printf("Enter Phone Number:\n");
     scanf("%d",&number);
-    printf("Enter Full Name\n");
-    scanf("%s",&name);
-    printf("Enter city name\n");
+    printf("Enter First Name:\n");
+    scanf("%s",&fname);
+    printf("Enter last Name:\n");
+    scanf("%s",&lname);
+    printf("Enter city name:\n");
     scanf("%s",&city);
+    printf("Enter Gender");
+    if( 'm' || 'M' || 'f' || 'F')
+    {
+        scanf("%c",&Gender);
+    }
     
 
 }
