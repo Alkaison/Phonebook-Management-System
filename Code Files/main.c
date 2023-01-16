@@ -11,6 +11,7 @@
 
 // global variables 
 char adminPassword[MAX_LENGTH] = "Admin";
+char userPassword[MAX_LENGTH] = "root";
 char userName[MAX_LENGTH];
 int choice = 0;
 
@@ -110,7 +111,49 @@ void getUsername()
 void userLogin()
 {
     clearBuffer();
+    char inputPassword[255], ch;
+    int i = 0;
 
+    printf("---------------------------------- \n");
+    printf("   >>> User Profile Login  <<< \n");
+    printf("---------------------------------- \n\n");
+	printf("Enter your password & Hit ENTER: ");
+
+    while(1)
+    {
+		ch = getch(); // get single character at one time & validate it 
+
+		if(ch == ENTER || ch == TAB)
+        {
+			inputPassword[i] = '\0';
+			break;
+		}
+        else if(ch == BKSP)
+        {
+			if(i > 0)
+            {
+				i--;
+				printf("\b \b"); // for backspace
+			}
+		}
+        else
+        {
+			inputPassword[i++] = ch;
+			printf("* \b");	// to replace password character with * 
+		}
+	}
+
+    fflush(stdin);
+    printf("\n");
+    // verifies the password 
+    if(strcmp(userPassword, inputPassword) == 0)
+        userPanel();
+    else
+    {
+        printf("ERROR: Invalid password please try again. \n");
+        system("pause");
+        loginPage();
+    }
 }
 
 void adminLogin()
@@ -119,6 +162,9 @@ void adminLogin()
     char inputPassword[255], ch;
     int i = 0;
 
+    printf("----------------------------------- \n");
+    printf("   >>> Administrator Login  <<< \n");
+    printf("----------------------------------- \n\n");
 	printf("Enter your password & Hit ENTER: ");
 	while(1)
     {
