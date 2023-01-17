@@ -9,11 +9,23 @@
 #define TAB 9
 #define BKSP 8
 
+// struct for contacts record 
+typedef struct
+{
+    char firstName[MAX_LENGTH];
+    char lastName[MAX_LENGTH];
+    char gender;
+    double phoneNumber;
+    char cityName[MAX_LENGTH];
+} DETAILS;
+
 // global variables 
 char adminPassword[MAX_LENGTH] = "Admin";
 char userPassword[MAX_LENGTH] = "root";
 char userName[MAX_LENGTH];
 int choice = 0;
+DETAILS contact;
+FILE *pF = NULL;
 
 // Function Prototypes or Function Declaration 
 // informative functions 
@@ -298,7 +310,39 @@ void clearBuffer()
 
 void addNewContact()
 {
-  
+    clearBuffer();
+    printf("------------------------------ \n");
+    printf("   >>> Add New Contact <<< \n");
+    printf("------------------------------ \n\n");
+    pF = fopen("ContactList.txt", "ab+");
+    
+    if(pF != NULL)
+    {
+        printf("Enter the first name: ");
+        gets(contact.firstName);
+
+        printf("Enter the last name: ");
+        gets(contact.lastName);
+
+        printf("Enter the city name: ");
+        gets(contact.cityName);
+
+        printf("Enter the gender[M/F]: ");
+        scanf(" %c",&contact.gender);
+
+        printf("Enter the phone number: ");
+        scanf("%lf",&contact.phoneNumber);
+
+        fprintf(pF, "%s %s %c %.0lf %s \n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+        printf("\n");
+        printf("Success: Contact details added in the record. \n");
+        system("pause");
+    }
+    else
+        printf("ERROR: Unable to locate or open the file. \n");
+    
+    fclose(pF);
+    adminPanel();
 }
 
 void updateContact()
