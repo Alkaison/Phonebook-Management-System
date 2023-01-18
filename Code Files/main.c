@@ -357,7 +357,27 @@ void deleteContact()
 
 void deleteAllContact()
 {
-
+    clearBuffer();
+    char confirmDelete[MAX_LENGTH];
+    printf("------------------------------ \n");
+    printf("   >>> Delete All Contact <<< \n");
+    printf("------------------------------ \n\n");
+    printf("Type `CONFIRM` to delete all the contact. \n");
+    printf("Message: ");
+    gets(confirmDelete);
+    printf("\n");
+    choice = strcmp(confirmDelete, "CONFIRM");
+    if(choice == 0)
+    {
+        pF = fopen("ContactList.txt", "w");
+        fclose(pF);
+        printf("Success: All contact details are deleted. \n");
+    }
+    else
+        printf("ERROR: Invalid message try again later. \n");
+    
+    system("pause");
+    adminPanel();
 }
 
 void displayContact()
