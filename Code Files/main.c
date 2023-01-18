@@ -25,6 +25,7 @@ char userPassword[MAX_LENGTH] = "root";
 char userName[MAX_LENGTH];
 int choice = 0;
 DETAILS contact;
+DETAILS copy;
 FILE *pF = NULL;
 
 // Function Prototypes or Function Declaration 
@@ -42,8 +43,8 @@ void userPanel();
 void adminPanel();
 
 // validation functions 
-void isValidGender();
-void isValidNumber();
+int isValidGender(char);
+int isValidNumber(double);
 void clearBuffer();
 
 // operational functions 
@@ -66,7 +67,7 @@ void loginPage()
     clearBuffer();
     printf("----------------------------------- \n");
     printf("   >>> Login into system as <<< \n");
-    printf("----------------------------------- \n");
+    printf("----------------------------------- \n\n");
     printf("[1] Administrator \n");
     printf("[2] User profile \n");
     printf("[3] Exit system \n");
@@ -95,16 +96,11 @@ void loginPage()
 void endScreen()
 {
     clearBuffer();
-    printf("-------------------------------- \n");
-    printf(">>> Team Members <<< \n");
-    printf("-------------------------------- \n");
-    printf("[1] Ganesh \n");
-    printf("[2] Amit \n");
-    printf("[3] Abrar \n");
-    printf("[4] Vivek \n");
-    printf("[5] Manish \n");
-    printf("[6] Aditya \n");
-    printf("-------------------------------- \n");
+    printf("--------------------------- \n");
+    printf("   >>> Team Members <<< \n");
+    printf("--------------------------- \n\n");
+    printf("ERROR: currently under work \n");
+    printf("--------------------------- \n");
     exit(0);
 }
 
@@ -292,14 +288,34 @@ void adminPanel()
     }
 }
 
-void isValidGender()
+int isValidGender(char gender)
 {
+    switch (gender)
+    {
+        case 'M':
+        case 'm':
+        case 'F':
+        case 'f':
+            return 1;
+        default:
+            printf("ERROR: Invalid gender try again later. \n");
+            return 0;
+    }
 
+    return 0;
 }
 
-void isValidNumber()
+int isValidNumber(double number)
 {
+    if(number <= 1000000000 || number >= 9999999999)
+    {
+        printf("ERROR: Invalid phone number try again later. \n");
+        return 0;
+    }
+    else
+        return 1;
 
+    return 0;
 }
 
 void clearBuffer()
@@ -311,6 +327,7 @@ void clearBuffer()
 void addNewContact()
 {
     clearBuffer();
+    int flag = 0;
     printf("------------------------------ \n");
     printf("   >>> Add New Contact <<< \n");
     printf("------------------------------ \n\n");
@@ -327,20 +344,27 @@ void addNewContact()
         printf("Enter the city name: ");
         gets(contact.cityName);
 
-        printf("Enter the gender[M/F]: ");
+        printf("Enter the gender [M/F]: ");
         scanf(" %c",&contact.gender);
+        fflush(stdin);
 
-        printf("Enter the phone number: ");
+        printf("Enter the phone number [+91]: ");
         scanf("%lf",&contact.phoneNumber);
-
-        fprintf(pF, "%s %s %c %.0lf %s \n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
         printf("\n");
-        printf("Success: Contact details added in the record. \n");
-        system("pause");
+
+        if(isValidGender(contact.gender))
+        {
+            if(isValidNumber(contact.phoneNumber))
+            {
+                fprintf(pF, "%s %s %c %.0lf %s \n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+                printf("Success: Contact details added in the record. \n");
+            }
+        }
     }
     else
         printf("ERROR: Unable to locate or open the file. \n");
-    
+ 
+    system("pause");
     fclose(pF);
     adminPanel();
 }
