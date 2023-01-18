@@ -10,7 +10,7 @@
 #define BKSP 8
 
 // struct for contacts record 
-typedef struct
+typedef struct RECORD
 {
     char firstName[MAX_LENGTH];
     char lastName[MAX_LENGTH];
@@ -278,8 +278,8 @@ int isValidGender(char *gender)
     {
         case 'M':
         case 'm':
-                *gender = 'm';
-                return 1;
+            *gender = 'm';
+            return 1;
         case 'F':
         case 'f':
             *gender = 'f';
@@ -288,7 +288,6 @@ int isValidGender(char *gender)
             printf("ERROR: Invalid gender try again later. \n");
             return 0;
     }
-
     return 0;
 }
 
