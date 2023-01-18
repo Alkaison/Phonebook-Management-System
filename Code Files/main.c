@@ -45,7 +45,7 @@ void adminPanel();
 
 // validation functions 
 int isValidGender(char *gender);
-int isValidNumber(double);
+int isValidNumber(double *number);
 char *removeSpaces(char *str);
 char *enterPassword(char *pass);
 void clearBuffer();
@@ -101,7 +101,7 @@ void endScreen()
     clearBuffer();
     printf("--------------------------- \n");
     printf("   >>> Team Members <<< \n");
-    printf("--------------------------- \n\n");
+    printf("--------------------------- \n");
     printf("ERROR: currently under work \n");
     printf("--------------------------- \n");
     exit(0);
@@ -291,9 +291,9 @@ int isValidGender(char *gender)
     return 0;
 }
 
-int isValidNumber(double number)
+int isValidNumber(double *number)
 {
-    if(number <= 1000000000 || number >= 9999999999)
+    if(*number <= 1000000000 || *number >= 9999999999)
     {
         printf("ERROR: Invalid phone number try again later. \n");
         return 0;
@@ -354,7 +354,7 @@ void addNewContact()
 
         if(isValidGender(&contact.gender))
         {
-            if(isValidNumber(contact.phoneNumber))
+            if(isValidNumber(&contact.phoneNumber))
             {
                 removeSpaces(contact.firstName);
                 removeSpaces(contact.lastName);
