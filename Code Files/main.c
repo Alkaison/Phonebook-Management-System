@@ -22,6 +22,7 @@ typedef struct
 // global variables 
 char adminPassword[MAX_LENGTH] = "Admin";
 char userPassword[MAX_LENGTH] = "root";
+char inputPassword[MAX_LENGTH];
 char userName[MAX_LENGTH];
 int choice = 0;
 DETAILS contact;
@@ -43,8 +44,10 @@ void userPanel();
 void adminPanel();
 
 // validation functions 
-int isValidGender(char);
+int isValidGender(char *gender);
 int isValidNumber(double);
+char *removeSpaces(char *str);
+char *enterPassword(char *pass);
 void clearBuffer();
 
 // operational functions 
@@ -67,7 +70,7 @@ void loginPage()
     clearBuffer();
     printf("----------------------------------- \n");
     printf("   >>> Login into system as <<< \n");
-    printf("----------------------------------- \n\n");
+    printf("----------------------------------- \n");
     printf("[1] Administrator \n");
     printf("[2] User profile \n");
     printf("[3] Exit system \n");
@@ -119,35 +122,11 @@ void getUsername()
 void userLogin()
 {
     clearBuffer();
-    char inputPassword[255], ch;
-    int i = 0;
-
     printf("---------------------------------- \n");
     printf("   >>> User Profile Login  <<< \n");
     printf("---------------------------------- \n\n");
-    printf("Enter your password & Hit ENTER: ");
 
-    while(1)
-    {
-        ch = getch(); // get single character at one time & validate it 
-        if(ch == ENTER || ch == TAB){
-            inputPassword[i] = '\0';
-            break;
-        }
-        else if(ch == BKSP){
-            if(i > 0){
-                i--;
-                printf("\b \b"); // for backspace
-            }
-        }
-        else{
-            inputPassword[i++] = ch;
-            printf("* \b");	// to replace password character with * 
-        }
-    }
-
-    fflush(stdin);
-    printf("\n");
+    enterPassword(inputPassword);
     // verifies the password 
     if(strcmp(userPassword, inputPassword) == 0)
         userPanel();
@@ -162,12 +141,26 @@ void userLogin()
 void adminLogin()
 {
     clearBuffer();
-    char inputPassword[255], ch;
-    int i = 0;
-
     printf("----------------------------------- \n");
     printf("   >>> Administrator Login  <<< \n");
     printf("----------------------------------- \n\n");
+
+    enterPassword(inputPassword);
+    // verifies the password 
+    if(strcmp(adminPassword, inputPassword) == 0)
+        adminPanel();
+    else
+    {
+        printf("ERROR: Invalid password please try again. \n");
+        system("pause");
+        loginPage();
+    }
+}
+
+char *enterPassword(char *pass)
+{
+    char ch;
+    int i = 0;
     printf("Enter your password & Hit ENTER: ");
 
     while(1)
@@ -188,18 +181,9 @@ void adminLogin()
             printf("* \b");	// to replace password character with * 
         }
     }
-
     fflush(stdin);
     printf("\n");
-    // verifies the password 
-    if(strcmp(adminPassword, inputPassword) == 0)
-        adminPanel();
-    else
-    {
-        printf("ERROR: Invalid password please try again. \n");
-        system("pause");
-        loginPage();
-    }
+    return inputPassword;
 }
 
 void userPanel()
@@ -288,14 +272,17 @@ void adminPanel()
     }
 }
 
-int isValidGender(char gender)
+int isValidGender(char *gender)
 {
-    switch (gender)
+    switch (*gender)
     {
         case 'M':
         case 'm':
+                *gender = 'm';
+                return 1;
         case 'F':
         case 'f':
+            *gender = 'f';
             return 1;
         default:
             printf("ERROR: Invalid gender try again later. \n");
@@ -316,6 +303,20 @@ int isValidNumber(double number)
         return 1;
 
     return 0;
+}
+
+char *removeSpaces(char *str) 
+{
+	int i = 0, j = 0; 
+	while (str[i]) 
+	{
+		if (str[i] != ' ') 
+		str[j++] = str[i]; 
+		i++; 
+	}
+	str[j] = '\0';
+    strlwr(str);
+	return str;
 }
 
 void clearBuffer()
@@ -352,20 +353,23 @@ void addNewContact()
         scanf("%lf",&contact.phoneNumber);
         printf("\n");
 
-        if(isValidGender(contact.gender))
+        if(isValidGender(&contact.gender))
         {
             if(isValidNumber(contact.phoneNumber))
             {
-                fprintf(pF, "%s %s %c %.0lf %s \n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+                removeSpaces(contact.firstName);
+                removeSpaces(contact.lastName);
+                removeSpaces(contact.cityName);
+                fprintf(pF, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
                 printf("Success: Contact details added in the record. \n");
             }
         }
     }
     else
         printf("ERROR: Unable to locate or open the file. \n");
- 
-    system("pause");
+
     fclose(pF);
+    system("pause");
     adminPanel();
 }
 
