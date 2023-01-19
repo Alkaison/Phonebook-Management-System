@@ -409,7 +409,24 @@ void deleteAllContact()
 
 void displayContact()
 {
+    clearBuffer();
+    printf("---------------------------- \n");
+    printf("   >>> Contacts List <<< \n");
+    printf("---------------------------- \n");
+    pF = fopen("ContactList.txt", "r");
 
+    while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+    {
+        printf("> Name: %s %s \n", contact.firstName, contact.lastName);
+        printf("> Gender: %c \n", contact.gender);
+        printf("> City: %s \n", contact.cityName);
+        printf("> Phone Number: %.0lf \n", contact.phoneNumber);
+        printf("--------------------------- \n");
+    }
+
+    fclose(pF);
+    system("pause");
+    adminPanel();
 }
 
 void searchByName()
