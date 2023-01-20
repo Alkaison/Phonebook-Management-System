@@ -8,6 +8,8 @@
 #define ENTER 13
 #define TAB 9
 #define BKSP 8
+#define USER_CODE 101
+#define ADMIN_CODE 102
 
 // struct for contacts record 
 typedef struct RECORD
@@ -55,9 +57,9 @@ void addNewContact();
 void updateContact();
 void deleteContact();
 void deleteAllContact();
-void displayContact();
-void searchByName();
-void searchByNumber();
+void displayContact(int);
+void searchByName(int);
+void searchByNumber(int);
 
 int main(){
 
@@ -203,13 +205,13 @@ void userPanel()
     switch (choice)
     {
         case 1:
-            displayContact();
+            displayContact(USER_CODE);
             break;
         case 2:
-            searchByName();
+            searchByName(USER_CODE);
             break;
         case 3:
-            searchByNumber();
+            searchByNumber(USER_CODE);
             break;
         case 4:
             endScreen();
@@ -248,13 +250,13 @@ void adminPanel()
             updateContact();
             break;
         case 3:
-            displayContact();
+            displayContact(ADMIN_CODE);
             break;
         case 4:
-            searchByName();
+            searchByName(ADMIN_CODE);
             break;
         case 5:
-            searchByNumber();
+            searchByNumber(ADMIN_CODE);
             break;
         case 6:
             deleteContact();
@@ -407,7 +409,7 @@ void deleteAllContact()
     adminPanel();
 }
 
-void displayContact()
+void displayContact(int entryCode)
 {
     clearBuffer();
     printf("---------------------------- \n");
@@ -426,15 +428,57 @@ void displayContact()
 
     fclose(pF);
     system("pause");
-    adminPanel();
+    (entryCode == 101) ? userPanel() : adminPanel();
 }
 
-void searchByName()
+void searchByName(int entryCode)
 {
+    clearBuffer();
+    char findName[MAX_LENGTH];
+    int compare = 1, flag = 0;
 
+    printf("----------------------------- \n");
+    printf("   >>> Search By Name <<< \n");
+    printf("----------------------------- \n\n");
+
+    printf("Case Sensitive Alert: use lower case only. \n");
+    printf("Enter the first or last name: ");
+    gets(findName);
+
+    if(findName[strlen(findName) - 1] == ' ')
+        findName[strlen(findName) - 1] = '\0';
+    
+    printf("\n");
+    pF = fopen("ContactList.txt", "r");
+    while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+    {
+        compare = strcmp(findName, contact.firstName);
+
+        if(compare != 0)
+            compare = strcmp(findName, contact.lastName);
+        
+        if(compare == 0)
+        {
+            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
+            printf("> Gender: %c \n", contact.gender);
+            printf("> City: %s \n", contact.cityName);
+            printf("> Phone Number: %.0lf \n", contact.phoneNumber);
+            printf("----------------------------- \n");
+            flag++;
+        }
+    }
+    fclose(pF);
+    if(flag == 0)
+    {
+        printf("----------------------------------------- \n");
+        printf("> No contacts found matching your input. \n");
+        printf("----------------------------------------- \n");
+    }
+    system("pause");
+    (entryCode == 101) ? userPanel() : adminPanel();
 }
 
-void searchByNumber()
+void searchByNumber(int entryCode)
 {
 
 }
