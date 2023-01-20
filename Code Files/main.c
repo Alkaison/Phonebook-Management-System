@@ -480,5 +480,38 @@ void searchByName(int entryCode)
 
 void searchByNumber(int entryCode)
 {
+    clearBuffer();
+    double findNumber;
+    int flag = 0;
 
+    printf("------------------------------- \n");
+    printf("   >>> Search By Number <<< \n");
+    printf("------------------------------- \n\n");
+
+    printf("Enter the phone number [+91]: ");
+    scanf("%lf",&findNumber);
+
+    printf("\n");
+    pF = fopen("ContactList.txt", "r");
+    while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+    {
+        if(findNumber == contact.phoneNumber)
+        {
+            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
+            printf("> Gender: %c \n", contact.gender);
+            printf("> City: %s \n", contact.cityName);
+            printf("> Phone Number: %.0lf \n", contact.phoneNumber);
+            printf("----------------------------- \n");
+            flag++;
+        }
+    }
+    fclose(pF);
+    if(flag == 0)
+    {
+        printf("----------------------------------------- \n");
+        printf("> No contacts found matching your input. \n");
+        printf("----------------------------------------- \n");
+    }
+    system("pause");
+    (entryCode == 101) ? userPanel() : adminPanel();
 }
