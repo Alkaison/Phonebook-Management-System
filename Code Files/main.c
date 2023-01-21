@@ -381,16 +381,88 @@ void updateContact()
 
 void deleteContact()
 {
+    clearBuffer();
+    char confirmDelete[MAX_LENGTH];
+    double findNumber;
+    int flag = 0;
 
+    printf("----------------------------- \n");
+    printf("   >>> Delete Contact <<< \n");
+    printf("----------------------------- \n\n");
+    printf("Enter the phone number [+91]: ");
+    scanf("%lf",&findNumber);
+    printf("\n");
+
+    pF = fopen("ContactList.txt", "r");
+    FILE *pT = fopen("temporary.txt", "w");
+
+    while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+    {
+        if(findNumber == contact.phoneNumber)
+        {
+            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
+            printf("> Gender: %c \n", contact.gender);
+            printf("> City: %s \n", contact.cityName);
+            printf("> Phone Number: %.0lf \n", contact.phoneNumber);
+            printf("----------------------------- \n\n");
+
+            fflush(stdin);
+            printf("Type `CONFIRM` to delete this contact: ");
+            gets(confirmDelete);
+
+            if(strcmp(confirmDelete, "CONFIRM") == 0)
+                flag = 1;
+            else
+                fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+        }
+        else
+            fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+    }
+    fclose(pF);
+    fclose(pT);
+
+    pF = fopen("ContactList.txt", "w");
+    pT = fopen("temporary.txt", "r");
+    
+    while(fscanf(pT, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+        fprintf(pF, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+
+    fclose(pF);
+    fclose(pT);
+
+    pT = fopen("temporary.txt", "w");
+    fclose(pT);
+
+    if(flag == 0)
+    {
+        printf("----------------------------------------- \n");
+        printf("> No contacts found matching your input. \n");
+        printf("----------------------------------------- \n");
+    }
+    else if(flag = 1)
+    {
+        printf("\n---------------------------- \n");
+        printf("> Success: contact deleted. \n");
+        printf("---------------------------- \n");
+    }
+    else
+    {
+        printf("\n------------------------------------------ \n");
+        printf("> ERROR: Invalid message try again later. \n");
+        printf("------------------------------------------ \n");
+    }
+
+    system("pause");
+    adminPanel();
 }
 
 void deleteAllContact()
 {
     clearBuffer();
     char confirmDelete[MAX_LENGTH];
-    printf("------------------------------ \n");
+    printf("--------------------------------- \n");
     printf("   >>> Delete All Contact <<< \n");
-    printf("------------------------------ \n\n");
+    printf("--------------------------------- \n\n");
     printf("Type `CONFIRM` to delete all the contact. \n");
     printf("Message: ");
     gets(confirmDelete);
@@ -441,9 +513,9 @@ void searchByName(int entryCode)
     printf("   >>> Search By Name <<< \n");
     printf("----------------------------- \n\n");
 
-    printf("Case Sensitive Alert: use lower case only. \n");
     printf("Enter the first or last name: ");
     gets(findName);
+    strlwr(findName);
 
     if(findName[strlen(findName) - 1] == ' ')
         findName[strlen(findName) - 1] = '\0';
