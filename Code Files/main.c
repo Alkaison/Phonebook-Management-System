@@ -376,7 +376,114 @@ void addNewContact()
 
 void updateContact()
 {
+    clearBuffer();
+    char confirmDelete[MAX_LENGTH];
+    double findNumber;
+    int flag = 0;
 
+    printf("----------------------------- \n");
+    printf("   >>> Update Contact <<< \n");
+    printf("----------------------------- \n\n");
+    printf("Enter the phone number to update [+91]: ");
+    scanf("%lf",&findNumber);
+    printf("\n");
+
+    pF = fopen("ContactList.txt", "r");
+    FILE *pT = fopen("temporary.txt", "w");
+
+    while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+    {
+        if(findNumber == contact.phoneNumber)
+        {
+            printf("--------------------------------------------------- \n");
+            printf("> Contact Found in records. Enter the new details.\n");
+            printf("--------------------------------------------------- \n");
+            fflush(stdin);
+            printf("Enter the first name: ");
+            gets(copy.firstName);
+
+            printf("Enter the last name: ");
+            gets(copy.lastName);
+
+            printf("Enter the city name: ");
+            gets(copy.cityName);
+
+            printf("Enter the gender [M/F]: ");
+            scanf(" %c",&copy.gender);
+            fflush(stdin);
+            
+            printf("Enter the phone number [+91]: ");
+            scanf("%lf",&copy.phoneNumber);
+            printf("\n");
+
+            fflush(stdin);
+            printf("Type `CONFIRM` to update this details: ");
+            gets(confirmDelete);
+
+            printf("\n");
+            if(strcmp(confirmDelete, "CONFIRM") == 0)
+            {
+                if(isValidGender(&copy.gender))
+                {
+                    if(isValidNumber(&copy.phoneNumber))
+                    {
+                        removeSpaces(copy.firstName);
+                        removeSpaces(copy.lastName);
+                        removeSpaces(copy.cityName);
+                        fprintf(pT, "%s %s %c %.0lf %s\n",copy.firstName, copy.lastName, copy.gender, copy.phoneNumber, copy.cityName);
+                        flag = 2;
+                    }
+                    else
+                    {
+                        fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+                        flag = 3;
+                    }
+                }
+                else
+                {
+                    fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+                    flag = 3;
+                }
+            }
+            else
+            {
+                flag = 1;
+                fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+            }
+        }
+        else
+            fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+    }
+    fclose(pF);
+    fclose(pT);
+
+    if(flag == 1 || flag == 2)
+    {
+        pF = fopen("ContactList.txt", "w");
+        pT = fopen("temporary.txt", "r");
+        
+        while(fscanf(pT, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+            fprintf(pF, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+
+        fclose(pF);
+        fclose(pT);
+    }
+    
+    pT = fopen("temporary.txt", "w");
+    fclose(pT);
+
+    printf("----------------------------------------- \n");
+
+    if(flag == 0)
+        printf("> No contacts found matching your input. \n");
+    else if(flag == 1)
+        printf("> ERROR: Invalid message try again later. \n");
+    else if(flag == 2)
+        printf("> Success: contact updated. \n");
+
+    printf("----------------------------------------- \n");
+    system("pause");
+    adminPanel();
 }
 
 void deleteContact()
