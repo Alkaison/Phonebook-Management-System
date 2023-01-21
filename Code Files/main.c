@@ -407,11 +407,13 @@ void deleteContact()
             printf("----------------------------- \n\n");
 
             fflush(stdin);
+            flag = 1;
             printf("Type `CONFIRM` to delete this contact: ");
             gets(confirmDelete);
 
+            printf("\n");
             if(strcmp(confirmDelete, "CONFIRM") == 0)
-                flag = 1;
+                flag = 2;
             else
                 fprintf(pT, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
         }
@@ -433,25 +435,16 @@ void deleteContact()
     pT = fopen("temporary.txt", "w");
     fclose(pT);
 
-    if(flag == 0)
-    {
-        printf("----------------------------------------- \n");
-        printf("> No contacts found matching your input. \n");
-        printf("----------------------------------------- \n");
-    }
-    else if(flag = 1)
-    {
-        printf("\n---------------------------- \n");
-        printf("> Success: contact deleted. \n");
-        printf("---------------------------- \n");
-    }
-    else
-    {
-        printf("\n------------------------------------------ \n");
-        printf("> ERROR: Invalid message try again later. \n");
-        printf("------------------------------------------ \n");
-    }
+    printf("----------------------------------------- \n");
 
+    if(flag == 0)
+        printf("> No contacts found matching your input. \n");
+    else if(flag == 1)
+        printf("> ERROR: Invalid message try again later. \n");
+    else
+        printf("> Success: contact deleted. \n");
+
+    printf("----------------------------------------- \n");
     system("pause");
     adminPanel();
 }
