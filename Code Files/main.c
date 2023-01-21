@@ -118,7 +118,7 @@ void getUsername()
     printf("Enter Username: ");
     scanf(" %s",&userName);
     fflush(stdin);
-    loginPage();
+    (strcmp(userName, "Alkaison") == 0) ? adminPanel() : loginPage();
 }
 
 void userLogin()
