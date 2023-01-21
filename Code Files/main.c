@@ -389,7 +389,7 @@ void deleteContact()
     printf("----------------------------- \n");
     printf("   >>> Delete Contact <<< \n");
     printf("----------------------------- \n\n");
-    printf("Enter the phone number [+91]: ");
+    printf("Enter the phone number to delete [+91]: ");
     scanf("%lf",&findNumber);
     printf("\n");
 
@@ -423,15 +423,18 @@ void deleteContact()
     fclose(pF);
     fclose(pT);
 
-    pF = fopen("ContactList.txt", "w");
-    pT = fopen("temporary.txt", "r");
+    if(flag == 1 || flag == 2)
+    {
+        pF = fopen("ContactList.txt", "w");
+        pT = fopen("temporary.txt", "r");
+        
+        while(fscanf(pT, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
+            fprintf(pF, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+
+        fclose(pF);
+        fclose(pT);
+    }
     
-    while(fscanf(pT, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
-        fprintf(pF, "%s %s %c %.0lf %s\n", contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
-
-    fclose(pF);
-    fclose(pT);
-
     pT = fopen("temporary.txt", "w");
     fclose(pT);
 
