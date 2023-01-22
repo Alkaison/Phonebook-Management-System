@@ -65,6 +65,7 @@ int main(){
 void infoScreen()
 {
     clearBuffer();
+    system("title Phonebook Management System");
     system("color 60");
     printf("\t\t------------------------------------------- \n");
     printf("\t\t   >>> Phonebook Management System  <<< \n");
@@ -77,6 +78,7 @@ void infoScreen()
 void loginPage()
 {
     clearBuffer();
+    system("title Login Page");
     printf("----------------------------------- \n");
     printf("   >>> Login into system as <<< \n");
     printf("----------------------------------- \n");
@@ -108,17 +110,20 @@ void loginPage()
 void endScreen()
 {
     clearBuffer();
-    printf("--------------------------- \n");
-    printf("   >>> Team Members <<< \n");
-    printf("--------------------------- \n");
-    printf("ERROR: currently under work \n");
-    printf("--------------------------- \n");
+    system("title Credits Page");
+    printf("------------------------------ \n");
+    printf("   >>> Project Credits <<< \n");
+    printf("------------------------------ \n");
+    printf("> currently under work \n");
+    printf("------------------------------ \n");
+    system("pause");
     exit(0);
 }
 
 void adminLogin()
 {
     clearBuffer();
+    system("title Admin Login");
     char ch;
     int i = 0;
     printf("----------------------------------- \n");
@@ -161,6 +166,7 @@ void adminLogin()
 void userPanel()
 {
     clearBuffer();
+    system("title User Panel");
     printf("----------------------------------- \n");
     printf("\t>>> User Panel <<< \n");
     printf("----------------------------------- \n");
@@ -200,6 +206,7 @@ void userPanel()
 void adminPanel()
 {
     clearBuffer();
+    system("title Admin Panel");
     printf("------------------------------------ \n");
     printf("\t>>> Admin Panel <<< \n");
     printf("------------------------------------ \n");
@@ -307,6 +314,7 @@ void clearBuffer()
 void addNewContact()
 {
     clearBuffer();
+    system("title Add New Contact");
     int flag = 0;
     printf("------------------------------ \n");
     printf("   >>> Add New Contact <<< \n");
@@ -355,6 +363,7 @@ void addNewContact()
 void updateContact()
 {
     clearBuffer();
+    system("title Update Contact");
     char confirmDelete[MAX_LENGTH];
     double findNumber;
     int flag = 0;
@@ -467,6 +476,7 @@ void updateContact()
 void deleteContact()
 {
     clearBuffer();
+    system("title Delete Contact");
     char confirmDelete[MAX_LENGTH];
     double findNumber;
     int flag = 0;
@@ -540,6 +550,7 @@ void deleteContact()
 void deleteAllContact()
 {
     clearBuffer();
+    system("title Delete All Contact");
     char confirmDelete[MAX_LENGTH];
     printf("--------------------------------- \n");
     printf("   >>> Delete All Contact <<< \n");
@@ -565,6 +576,7 @@ void deleteAllContact()
 void displayContact(int entryCode)
 {
     clearBuffer();
+    system("title Display All Contact");
     printf("---------------------------- \n");
     printf("   >>> Contacts List <<< \n");
     printf("---------------------------- \n");
@@ -587,6 +599,7 @@ void displayContact(int entryCode)
 void searchByName(int entryCode)
 {
     clearBuffer();
+    system("title Search By Name");
     char findName[MAX_LENGTH];
     int compare = 1, flag = 0;
 
@@ -634,6 +647,7 @@ void searchByName(int entryCode)
 void searchByNumber(int entryCode)
 {
     clearBuffer();
+    system("title Search By Number");
     double findNumber;
     int flag = 0;
 
