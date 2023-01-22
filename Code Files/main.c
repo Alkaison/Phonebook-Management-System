@@ -23,7 +23,6 @@ typedef struct RECORD
 
 // global variables 
 char adminPassword[MAX_LENGTH] = "Admin";
-char userPassword[MAX_LENGTH] = "root";
 char inputPassword[MAX_LENGTH];
 char userName[MAX_LENGTH];
 int choice = 0;
@@ -33,15 +32,12 @@ FILE *pF = NULL;
 
 // Function Prototypes or Function Declaration 
 // informative functions 
+void infoScreen();
 void loginPage();
 void endScreen();
 
-// login password functions 
-void getUsername();
-void userLogin();
+// login password & permission functions 
 void adminLogin();
-
-// permission functions 
 void userPanel();
 void adminPanel();
 
@@ -49,7 +45,6 @@ void adminPanel();
 int isValidGender(char *gender);
 int isValidNumber(double *number);
 char *removeSpaces(char *str);
-char *enterPassword(char *pass);
 void clearBuffer();
 
 // operational functions 
@@ -63,8 +58,20 @@ void searchByNumber(int);
 
 int main(){
 
-    getUsername();
+    infoScreen();
     return 0;
+}
+
+void infoScreen()
+{
+    clearBuffer();
+    system("color 60");
+    printf("\t\t------------------------------------------- \n");
+    printf("\t\t   >>> Phonebook Management System  <<< \n");
+    printf("\t\t------------------------------------------- \n\n");
+    printf("\tIt is a software application that allows users to store, organize\n and manage large numbers of contact records efficiently. The system is designed\n to have functions such as adding, updating, viewing, listing and deleting contacts. \n\n");
+    system("pause");
+    loginPage();
 }
 
 void loginPage()
@@ -73,9 +80,9 @@ void loginPage()
     printf("----------------------------------- \n");
     printf("   >>> Login into system as <<< \n");
     printf("----------------------------------- \n");
-    printf("[1] Administrator \n");
-    printf("[2] User profile \n");
-    printf("[3] Exit system \n");
+    printf("[1] Administrator. \n");
+    printf("[2] User profile. \n");
+    printf("[3] EXIT. \n");
     printf("----------------------------------- \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
@@ -86,7 +93,7 @@ void loginPage()
             adminLogin();
             break;
         case 2:
-            userLogin();
+            userPanel();
             break;
         case 3:
             endScreen();
@@ -109,62 +116,16 @@ void endScreen()
     exit(0);
 }
 
-void getUsername()
-{
-    clearBuffer();
-    printf("------------------------------------------- \n");
-    printf("   >>> Phonebook Management System  <<< \n");
-    printf("------------------------------------------- \n\n");
-    printf("Enter Username: ");
-    scanf(" %s",&userName);
-    fflush(stdin);
-    (strcmp(userName, "Alkaison") == 0) ? adminPanel() : loginPage();
-}
-
-void userLogin()
-{
-    clearBuffer();
-    printf("---------------------------------- \n");
-    printf("   >>> User Profile Login  <<< \n");
-    printf("---------------------------------- \n\n");
-
-    enterPassword(inputPassword);
-    // verifies the password 
-    if(strcmp(userPassword, inputPassword) == 0)
-        userPanel();
-    else
-    {
-        printf("ERROR: Invalid password please try again. \n");
-        system("pause");
-        loginPage();
-    }
-}
-
 void adminLogin()
 {
     clearBuffer();
+    char ch;
+    int i = 0;
     printf("----------------------------------- \n");
     printf("   >>> Administrator Login  <<< \n");
     printf("----------------------------------- \n\n");
 
-    enterPassword(inputPassword);
-    // verifies the password 
-    if(strcmp(adminPassword, inputPassword) == 0)
-        adminPanel();
-    else
-    {
-        printf("ERROR: Invalid password please try again. \n");
-        system("pause");
-        loginPage();
-    }
-}
-
-char *enterPassword(char *pass)
-{
-    char ch;
-    int i = 0;
     printf("Enter your password & Hit ENTER: ");
-
     while(1)
     {
         ch = getch(); // get single character at one time & validate it 
@@ -183,9 +144,18 @@ char *enterPassword(char *pass)
             printf("* \b");	// to replace password character with * 
         }
     }
+
     fflush(stdin);
     printf("\n");
-    return inputPassword;
+    // verifies the password 
+    if(strcmp(adminPassword, inputPassword) == 0)
+        adminPanel();
+    else
+    {
+        printf("ERROR: Invalid password please try again. \n");
+        system("pause");
+        loginPage();
+    }
 }
 
 void userPanel()
@@ -197,7 +167,8 @@ void userPanel()
     printf("[1] Display All Contact. \n");
     printf("[2] Search By Name. \n");
     printf("[3] Search By Number. \n");
-    printf("[4] Logout. \n");
+    printf("[4] Back to Login. \n");
+    printf("[5] EXIT. \n");
     printf("----------------------------------- \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
@@ -214,6 +185,9 @@ void userPanel()
             searchByNumber(USER_CODE);
             break;
         case 4:
+            loginPage();
+            break;
+        case 5:
             endScreen();
             break;
         default:
@@ -236,7 +210,8 @@ void adminPanel()
     printf("[5] Search By Number. \n");
     printf("[6] Delete Contact. \n");
     printf("[7] Delete All Contact. \n");
-    printf("[8] Logout. \n");
+    printf("[8] Back to Login. \n");
+    printf("[9] EXIT. \n");
     printf("------------------------------------ \n\n");
     printf("Enter the number & Hit ENTER: ");
     scanf("%d",&choice);
@@ -265,6 +240,9 @@ void adminPanel()
             deleteAllContact();
             break;
         case 8:
+            loginPage();
+            break;
+        case 9:
             endScreen();
             break;
         default:
