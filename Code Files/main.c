@@ -1,3 +1,8 @@
+/*
+    Project Title: Phonebook Management System 
+    Language: C 
+    Concepts: File Handling, Struct, Define, etc. 
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -111,11 +116,16 @@ void endScreen()
 {
     clearBuffer();
     system("title Credits Page");
-    printf("------------------------------ \n");
-    printf("   >>> Project Credits <<< \n");
-    printf("------------------------------ \n");
-    printf("> currently under work \n");
-    printf("------------------------------ \n");
+    printf("------------------------------------ \n");
+    printf("   >>> Meet our project team <<< \n");
+    printf("------------------------------------ \n");
+    printf("> Ganesh Mourya \n");
+    printf("> Amit Nare \n");
+    printf("> Abrar Shaikh \n");
+    printf("> Aditya Tiwari \n");
+    printf("> Vivek Gupta \n");
+    printf("> Manish Nirala \n");
+    printf("------------------------------------ \n");
     system("pause");
     exit(0);
 }
@@ -307,8 +317,8 @@ char *removeSpaces(char *str)
 
 void clearBuffer()
 {
-    system("cls");
-    fflush(stdin);
+    system("cls");  // clears the output screen 
+    fflush(stdin);  // clears the input buffers like '\n' 
 }
 
 void addNewContact()
@@ -340,6 +350,7 @@ void addNewContact()
         scanf("%lf",&contact.phoneNumber);
         printf("\n");
 
+        // validates gender & phoneNumber inputs to prevent storing invalid data into files  
         if(isValidGender(&contact.gender))
         {
             if(isValidNumber(&contact.phoneNumber))
@@ -444,6 +455,7 @@ void updateContact()
     fclose(pF);
     fclose(pT);
 
+    // only perform update process only if the user is ready for it 
     if(flag == 1 || flag == 2)
     {
         pF = fopen("ContactList.txt", "w");
@@ -535,6 +547,7 @@ void deleteContact()
 
     printf("----------------------------------------- \n");
 
+    // show the messaage according to the operations perform 
     if(flag == 0)
         printf("> No contacts found matching your input. \n");
     else if(flag == 1)
@@ -559,10 +572,12 @@ void deleteAllContact()
     printf("Message: ");
     gets(confirmDelete);
     printf("\n");
+
+    // checks for the confirmation message 
     choice = strcmp(confirmDelete, "CONFIRM");
     if(choice == 0)
     {
-        pF = fopen("ContactList.txt", "w");
+        pF = fopen("ContactList.txt", "w");  // erases everything from file and then save it 
         fclose(pF);
         printf("Success: All contact details are deleted. \n");
     }
@@ -611,6 +626,7 @@ void searchByName(int entryCode)
     gets(findName);
     strlwr(findName);
 
+    // if the input has space at end remove it 
     if(findName[strlen(findName) - 1] == ' ')
         findName[strlen(findName) - 1] = '\0';
     
@@ -680,5 +696,5 @@ void searchByNumber(int entryCode)
         printf("----------------------------------------- \n");
     }
     system("pause");
-    (entryCode == 101) ? userPanel() : adminPanel();
+    (entryCode == 101) ? userPanel() : adminPanel();  // get them back to there panel according to entrycode 
 }
