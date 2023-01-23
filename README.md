@@ -12,6 +12,16 @@ remove data from/to a file. The functions that make up this project's menu
 include adding new records, listing them, editing and updating them, looking 
 for saved contacts, and deleting phonebook entries.
 
+## Documents 
+
+- Synopsis report [here](/Documents/PhonebookManagementSystem_Synopsis.pdf)
+- Use case diagram [here](/Documents/PhonebookManagementSystem_UseCaseDiagram.pdf)
+- Output Images [here](/Images/)
+
+**Note:** If the documents are not rendering on github please download the repository [here](https://github.com/Alkaison/Phonebook-Management-System/archive/refs/heads/main.zip). 
+
+## Features 
+
 We have used many functions in this project. These functions are very easy to understand as their name itself signifies their respective operations.
 
 - Login Page
@@ -34,7 +44,7 @@ We have used many functions in this project. These functions are very easy to un
 - C/C++ compiler (Recommended: GCC Compiler)
 - Command Prompt or Windows Powershell
 
-**Note**: This program won't run on online compilers as they don't provide libraries for FILE Management & external storing.
+**Note:** This program won't run on online compilers as they don't provide libraries for FILE Management & external storing.
 
 ## Screenshots 🖼️
 
