@@ -591,20 +591,21 @@ void deleteAllContact()
 void displayContact(int entryCode)
 {
     clearBuffer();
+    int counter = 1;
     system("title Display All Contact");
-    printf("---------------------------- \n");
-    printf("   >>> Contacts List <<< \n");
-    printf("---------------------------- \n");
+    printf("\n\n\t\t\t\t---------------------------- \n");
+    printf("\t\t\t\t   >>> Contacts List <<< \n");
+    printf("\t\t\t\t---------------------------- \n\n");
     pF = fopen("ContactList.txt", "r");
 
+    printf("\t\t|===============================================================| \n");
+    printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+    printf("\t\t|===============================================================| \n");
+
     while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
-    {
-        printf("> Name: %s %s \n", contact.firstName, contact.lastName);
-        printf("> Gender: %c \n", contact.gender);
-        printf("> City: %s \n", contact.cityName);
-        printf("> Phone Number: %.0lf \n", contact.phoneNumber);
-        printf("--------------------------- \n");
-    }
+        printf("\t\t| %d| %s %s \t| %c |\t %.0lf \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.phoneNumber, contact.cityName);
+
+    printf("\t\t|===============================================================| \n\n");
 
     fclose(pF);
     system("pause");
