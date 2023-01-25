@@ -7,6 +7,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<conio.h>
+#include<windows.h>
 
 // define constants 
 #define MAX_LENGTH 255
@@ -72,10 +73,19 @@ void infoScreen()
     clearBuffer();
     system("title Phonebook Management System");
     system("color 60");
-    printf("\t\t------------------------------------------- \n");
-    printf("\t\t   >>> Phonebook Management System  <<< \n");
-    printf("\t\t------------------------------------------- \n\n");
-    printf("\tIt is a software application that allows users to store, organize\n and manage large numbers of contact records efficiently. The system is designed\n to have functions such as adding, updating, viewing, listing and deleting contacts. \n\n");
+    printf("\n\t\t\t\t------------------------------------------- \n");
+    printf("\t\t\t\t   >>> Phonebook Management System  <<< \n");
+    printf("\t\t\t\t------------------------------------------- \n\n");
+    printf("\t\tIt is a software application that allows users to store, organize\n\t and manage large numbers of contact records efficiently. The system is designed\n\t    to have functions such as adding, updating, viewing and deleting contacts. \n\n");
+    printf("\t\t\t\t------------------------------------ \n");
+    printf("\t\t\t\t   >>> Meet our project team <<< \n");
+    printf("\t\t\t\t------------------------------------ \n\n");
+    printf("\t\t\t\t\t > Ganesh Mourya \n");
+    printf("\t\t\t\t\t > Amit Nare \n");
+    printf("\t\t\t\t\t > Abrar Shaikh \n");
+    printf("\t\t\t\t\t > Aditya Tiwari \n");
+    printf("\t\t\t\t\t > Vivek Gupta \n");
+    printf("\t\t\t\t\t > Manish Nirala \n\n");
     system("pause");
     loginPage();
 }
@@ -117,16 +127,9 @@ void endScreen()
     clearBuffer();
     system("title Credits Page");
     printf("------------------------------------ \n");
-    printf("   >>> Meet our project team <<< \n");
+    printf("   >>> <<<   \n");
     printf("------------------------------------ \n");
-    printf("> Ganesh Mourya \n");
-    printf("> Amit Nare \n");
-    printf("> Abrar Shaikh \n");
-    printf("> Aditya Tiwari \n");
-    printf("> Vivek Gupta \n");
-    printf("> Manish Nirala \n");
-    printf("------------------------------------ \n");
-    system("pause");
+    Sleep(2000);  // pause the screen for 3 seconds 
     exit(0);
 }
 
