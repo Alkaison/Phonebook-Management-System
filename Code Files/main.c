@@ -643,6 +643,12 @@ void searchByName(int entryCode)
     printf("Enter the first or last name: ");
     gets(findName);
 
+    // if the input has space at end remove it 
+    if(findName[strlen(findName) - 1] == ' ')
+        findName[strlen(findName) - 1] = '\0';
+
+    printf("\n");
+    strlwr(findName);
     flag = isValidName(findName, 255);
     if(flag == 4)
     {
@@ -653,12 +659,6 @@ void searchByName(int entryCode)
         (entryCode == 101) ? userPanel() : adminPanel();
     }
 
-    strlwr(findName);
-    // if the input has space at end remove it 
-    if(findName[strlen(findName) - 1] == ' ')
-        findName[strlen(findName) - 1] = '\0';
-    
-    printf("\n");
     pF = fopen("ContactList.txt", "r");
     while(fscanf(pF, "%s %s %c %lf %s\n",contact.firstName, contact.lastName, &contact.gender, &contact.phoneNumber, contact.cityName) != EOF)
     {
