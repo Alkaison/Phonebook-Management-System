@@ -8,6 +8,7 @@
 #include<string.h>
 #include<conio.h>
 #include<windows.h>
+#include<ctype.h>
 
 // define constants 
 #define MAX_LENGTH 255
@@ -50,6 +51,7 @@ void adminPanel();
 // validation functions 
 int isValidGender(char *gender);
 int isValidNumber(double *number);
+int isValidName(char *name, int length);
 char *removeSpaces(char *str);
 void clearBuffer();
 
@@ -301,6 +303,18 @@ int isValidNumber(double *number)
     else
         return 1;
 
+    return 0;
+}
+
+int isValidName(char *name, int length)
+{
+    for(int cnt=0; cnt < length; cnt++)
+    {
+        if(name[cnt] == '\0')
+            break;
+        if(isalpha(name[cnt]) == 0)
+            return 4;
+    }
     return 0;
 }
 
@@ -628,8 +642,18 @@ void searchByName(int entryCode)
 
     printf("Enter the first or last name: ");
     gets(findName);
-    strlwr(findName);
 
+    flag = isValidName(findName, 255);
+    if(flag == 4)
+    {
+        printf("------------------------------------------- \n");
+        printf("ERROR: Invalid input it contains a number.  \n");
+        printf("------------------------------------------- \n");
+        system("pause");
+        (entryCode == 101) ? userPanel() : adminPanel();
+    }
+
+    strlwr(findName);
     // if the input has space at end remove it 
     if(findName[strlen(findName) - 1] == ' ')
         findName[strlen(findName) - 1] = '\0';
