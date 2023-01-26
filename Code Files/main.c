@@ -33,7 +33,7 @@ char adminPassword[MAX_LENGTH] = "Admin";
 char inputPassword[MAX_LENGTH];
 char userName[MAX_LENGTH];
 char findNumber[MAX_LENGTH];
-int choice = 0;
+int choice = 0, len = 0;
 DETAILS contact;
 DETAILS copy;
 FILE *pF = NULL;
@@ -51,7 +51,7 @@ void adminPanel();
 
 // validation functions 
 int isValidGender(char *gender);
-int isValidNumeric(char *num);
+int isValidNumeric(char num[]);
 int isValidName(char *name);
 char *removeSpaces(char *str);
 void invalidInput(int);
@@ -91,6 +91,7 @@ void infoScreen()
     printf("\t\t\t\t\t > Aditya Tiwari \n");
     printf("\t\t\t\t\t > Vivek Gupta \n");
     printf("\t\t\t\t\t > Manish Nirala \n\n");
+    printf("\t\t\t\t------------------------------------ \n\n");
     system("pause");
     loginPage();
 }
@@ -121,7 +122,9 @@ void loginPage()
             endScreen();
             break;
         default:
-            printf("ERROR: Invalid input please try again. \n");
+            printf("--------------------------------------- \n");
+            printf("ERROR: Invalid input please try again.  \n");
+            printf("--------------------------------------- \n");
             system("pause");
             loginPage();
     }
@@ -175,7 +178,9 @@ void adminLogin()
         adminPanel();
     else
     {
-        printf("ERROR: Invalid password please try again. \n");
+        printf("------------------------------------------ \n");
+        printf("ERROR: Invalid password please try again.  \n");
+        printf("------------------------------------------ \n");
         system("pause");
         loginPage();
     }
@@ -219,7 +224,9 @@ void userPanel()
             endScreen();
             break;
         default:
+            printf("---------------------------------------\n");
             printf("ERROR: Invalid input please try again. \n");
+            printf("---------------------------------------\n");
             system("pause");
             userPanel();
     }
@@ -279,7 +286,9 @@ void adminPanel()
             endScreen();
             break;
         default:
+            printf("---------------------------------------\n");
             printf("ERROR: Invalid input please try again. \n");
+            printf("---------------------------------------\n");
             system("pause");
             adminPanel();
     }
@@ -298,7 +307,9 @@ int isValidGender(char *gender)
             *gender = 'f';
             return 1;
         default:
-            printf("ERROR: Invalid gender try again later. \n");
+            printf("--------------------------------------- \n");
+            printf("ERROR: Invalid gender try again later.  \n");
+            printf("--------------------------------------- \n");
             return 0;
     }
     return 0;
@@ -316,19 +327,25 @@ int isValidName(char *name)
     return 0;
 }
 
-int isValidNumeric(char *num)
-{
+int isValidNumeric(char num[])
+{   len = 0;
     for(int cnt = 0; cnt < 255; cnt++)
     {
         if(num[cnt] == '\0')
             break;
+        len++;
         if(isdigit(num[cnt]) == 0)
+        {
+            len = 0;
             return 4;
+        } 
     }
 
-    if(num <= 1000000000 || num >= 9999999999)
+    if(len != 10)
     {
-        printf("ERROR: Invalid phone number try again later. \n");
+        printf("------------------------------------------ \n");
+        printf("ERROR: phone number must be of 10 digits. \n");
+        printf("------------------------------------------ \n");
         return 0;
     }
     else
@@ -399,7 +416,7 @@ void addNewContact()
         // validates gender & phoneNumber inputs to prevent storing invalid data into files 
         if(isValidGender(&contact.gender))
         {
-            if(isValidNumeric(&contact.findNum))
+            if(isValidNumeric(contact.findNum) == 1)
             {
                 removeSpaces(contact.firstName);
                 removeSpaces(contact.lastName);
@@ -407,12 +424,20 @@ void addNewContact()
                 fprintf(pF, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
                 printf("Success: Contact details added in the record. \n");
             }
+            else
+                flag = 1;
         }
     }
     else
         printf("ERROR: Unable to locate or open the file. \n");
 
     fclose(pF);
+    if(flag == 1 && len == 0)
+    {
+        printf("------------------------------------------------------- \n");
+        printf("ERROR: Invalid input for phone number try again later.  \n");
+        printf("------------------------------------------------------- \n");
+    }
     system("pause");
     adminPanel();
 }
@@ -431,7 +456,7 @@ void updateContact()
     gets(findNumber);
     printf("\n");
 
-    if(isValidNumeric(&findNumber) == 4)
+    if(isValidNumeric(findNumber) == 4)
         invalidInput(ADMIN_CODE);
 
     pF = fopen("ContactList.txt", "r");
@@ -472,7 +497,7 @@ void updateContact()
                 removeSpaces(copy.findNum);
                 if(isValidGender(&copy.gender))
                 {
-                    if(isValidNumeric(&copy.findNum))
+                    if(isValidNumeric(copy.findNum) == 1)
                     {
                         removeSpaces(copy.firstName);
                         removeSpaces(copy.lastName);
@@ -481,10 +506,7 @@ void updateContact()
                         flag = 2;
                     }
                     else
-                    {
                         fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                        flag = 3;
-                    }
                 }
                 else
                 {
@@ -520,16 +542,25 @@ void updateContact()
     pT = fopen("temporary.txt", "w");
     fclose(pT);
 
-    printf("----------------------------------------- \n");
-
-    if(flag == 0)
-        printf("> No contacts found matching your input. \n");
+    if(flag == 0 && len == 10)
+    {
+        printf("----------------------------------------- \n");
+        printf("> No contacts found matching your input.  \n");
+        printf("----------------------------------------- \n");
+    }
     else if(flag == 1)
+    {
+        printf("----------------------------------------- \n");
         printf("> ERROR: Invalid message try again later. \n");
+        printf("----------------------------------------- \n");
+    }
     else if(flag == 2)
-        printf("> Success: contact updated. \n");
-
-    printf("----------------------------------------- \n");
+    {
+        printf("----------------------------- \n");
+        printf("> Success: contact updated.   \n");
+        printf("----------------------------- \n");
+    }
+    
     system("pause");
     adminPanel();
 }
@@ -548,7 +579,7 @@ void deleteContact()
     gets(findNumber);
     printf("\n");
 
-    if(isValidNumeric(&findNumber) == 4)
+    if(isValidNumeric(findNumber) == 4)
         invalidInput(ADMIN_CODE);
     
     pF = fopen("ContactList.txt", "r");
@@ -596,17 +627,26 @@ void deleteContact()
     pT = fopen("temporary.txt", "w");
     fclose(pT);
 
-    printf("----------------------------------------- \n");
-
     // show the messaage according to the operations perform 
-    if(flag == 0)
-        printf("> No contacts found matching your input. \n");
+    if(flag == 0 && len == 10)
+    {
+        printf("----------------------------------------- \n");
+        printf("> No contacts found matching your input.  \n");
+        printf("----------------------------------------- \n");
+    }
     else if(flag == 1)
+    {
+        printf("----------------------------------------- \n");
         printf("> ERROR: Invalid message try again later. \n");
-    else
-        printf("> Success: contact deleted. \n");
+        printf("----------------------------------------- \n");
+    }
+    else if(flag == 2)
+    {
+        printf("----------------------------- \n");
+        printf("> Success: contact deleted.   \n");
+        printf("----------------------------- \n");
+    }
 
-    printf("----------------------------------------- \n");
     system("pause");
     adminPanel();
 }
@@ -730,9 +770,10 @@ void searchByNumber(int entryCode)
     gets(findNumber);
 
     printf("\n");
-    flag = isValidNumeric(&findNumber);
-    if(flag == 4)
+    if(isValidNumeric(findNumber) == 4)
         invalidInput(entryCode);
+    if(len != 10)
+        flag++;
     
     pF = fopen("ContactList.txt", "r");
     while(fscanf(pF, "%s %s %c %s %s\n",contact.firstName, contact.lastName, &contact.gender, contact.findNum, contact.cityName) != EOF)
@@ -769,7 +810,7 @@ void searchByCity(int entryCode)
     printf("   >>> Search By City <<<     \n");
     printf("----------------------------- \n\n");
 
-    printf("Enter the first or last name: ");
+    printf("Enter the city name: ");
     gets(findCity);
 
     // if the input has space at end remove it 
