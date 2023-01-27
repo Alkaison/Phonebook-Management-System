@@ -3,25 +3,25 @@
     Language: C 
     Concepts: File Handling, Struct, Define, etc. 
 */
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<conio.h>
-#include<windows.h>
-#include<ctype.h>
+#include<stdio.h>  // almost everything 
+#include<stdlib.h>  // system() 
+#include<string.h>  // strcmp(), strlen() 
+#include<conio.h>  // getch() 
+#include<windows.h>  // Sleep() 
+#include<ctype.h>  // isdigit(), isaplha() 
 
-// define constants 
+// define constants -> is used to define the constant or the micro substitution 
 #define MAX_LENGTH 255
-#define ENTER 13
-#define TAB 9
-#define BKSP 8
-#define USER_CODE 101
-#define ADMIN_CODE 102
+#define ENTER 13  // ASCII Value for ENTRY KEY
+#define TAB 9  // ASCII Value for TAB KEY
+#define BKSP 8  // ASCII Value for Backspace KEY
+#define USER_CODE 101  // access code for functions 
+#define ADMIN_CODE 102  // access code for functions 
 
 // struct for contacts record 
 typedef struct RECORD
 {
-    char firstName[MAX_LENGTH];
+    char firstName[MAX_LENGTH];  // uses the define subsitutor 
     char lastName[MAX_LENGTH];
     char gender;
     char findNum[MAX_LENGTH];
@@ -29,9 +29,8 @@ typedef struct RECORD
 } DETAILS;
 
 // global variables 
-char adminPassword[MAX_LENGTH] = "Admin";
+char adminPassword[MAX_LENGTH] = "Admin";  // login password for ADMINISTRATOR 
 char inputPassword[MAX_LENGTH];
-char userName[MAX_LENGTH];
 char findNumber[MAX_LENGTH];
 int choice = 0, len = 0;
 DETAILS contact;
@@ -39,37 +38,36 @@ DETAILS copy;
 FILE *pF = NULL;
 
 // Function Prototypes or Function Declaration 
-// informative functions 
-void infoScreen();
-void loginPage();
-void endScreen();
+void infoScreen();  // introduction screen 
+void loginPage();  // choice login type 
+void endScreen();  // closing screen 
 
 // login password & permission functions 
-void adminLogin();
+void adminLogin();  // secret password 
 void userPanel();
 void adminPanel();
 
 // validation functions 
-int isValidGender(char *gender);
-int isValidNumeric(char num[]);
-int isValidName(char *name);
-char *removeSpaces(char *str);
-void invalidInput(int);
-void clearBuffer();
+int isValidGender(char *gender);  // checks for the gender input 
+int isValidNumeric(char num[]);  // checks for the phone number input 
+int isValidName(char *name);  // checks string for searchByCity & searchByName  
+char *removeSpaces(char *str);  // removes empty spaces from name inputs 
+void invalidInput(int);  // shows error on invalid inputs and returns them back to the panel 
+void clearBuffer();  // clears the output screen & input buffer 
 
 // operational functions 
 void addNewContact();
 void updateContact();
 void deleteContact();
 void deleteAllContact();
-void displayContact(int);
+void displayContact(int);  // int entryCode -> used for checking the type of user (Admin/User) 
 void searchByName(int);
 void searchByNumber(int);
 void searchByCity(int);
 
 int main(){
 
-    infoScreen();
+    infoScreen();  // starts with introduction screen & moves on to login Page 
     return 0;
 }
 
@@ -134,11 +132,13 @@ void endScreen()
 {
     clearBuffer();
     system("title Credits Page");
-    printf("------------------------------------------ \n");
-    printf("   >>> Phonebook Management System <<<     \n");
-    printf("------------------------------------------ \n");
+    printf("\n\t\t\t\t------------------------------------------ \n");
+    printf("\t\t\t\t   >>> Phonebook Management System <<<     \n");
+    printf("\t\t\t\t------------------------------------------ \n\n");
+    printf("\t\t\t\t\t\tThank You. \n\n");
+    printf("\t\t\t\t------------------------------------------ \n\n");
     Sleep(1500);  // pause the screen for 3 seconds 
-    exit(0);
+    exit(0);  // ends the program safely 
 }
 
 void adminLogin()
@@ -152,21 +152,21 @@ void adminLogin()
     printf("----------------------------------- \n\n");
 
     printf("Enter your password & Hit ENTER: ");
-    while(1)
+    while(1)  // runs infinite times until breaked 
     {
         ch = getch(); // get single character at one time & validate it 
-        if(ch == ENTER || ch == TAB){
-            inputPassword[i] = '\0';
+        if(ch == ENTER || ch == TAB){  // if ENTER or TAB Key is pressed save & break the loop 
+            inputPassword[i] = '\0';  // add NULL at the end 
             break;
         }
-        else if(ch == BKSP){
+        else if(ch == BKSP){  // if Backspace Key is pressed erase the last input 
             if(i > 0){
                 i--;
                 printf("\b \b"); // for backspace
             }
         }
         else{
-            inputPassword[i++] = ch;
+            inputPassword[i++] = ch;  // store it at (i)th of variable 
             printf("* \b");	// to replace password character with * 
         }
     }
@@ -174,7 +174,7 @@ void adminLogin()
     fflush(stdin);
     printf("\n");
     // verifies the password 
-    if(strcmp(adminPassword, inputPassword) == 0)
+    if(strcmp(adminPassword, inputPassword) == 0)  // if both are equal then 0 is return 
         adminPanel();
     else
     {
@@ -294,7 +294,7 @@ void adminPanel()
     }
 }
 
-int isValidGender(char *gender)
+int isValidGender(char *gender)  // checks gender value through pointer 
 {
     switch (*gender)
     {
@@ -315,7 +315,7 @@ int isValidGender(char *gender)
     return 0;
 }
 
-int isValidName(char *name)
+int isValidName(char *name)  // checks name through pointer 
 {
     for(int cnt=0; cnt < 255; cnt++)
     {
@@ -363,7 +363,7 @@ void invalidInput(int entryCode)
     (entryCode == 101) ? userPanel() : adminPanel();
 }
 
-char *removeSpaces(char *str) 
+char *removeSpaces(char *str) // functions return type is (char pointer) and accepts argument as pointer 
 {
 	int i = 0, j = 0; 
 	while (str[i]) 
@@ -393,6 +393,7 @@ void addNewContact()
     printf("------------------------------ \n\n");
     pF = fopen("ContactList.txt", "ab+");
     
+    // checks if the txt file exists or not 
     if(pF != NULL)
     {
         printf("Enter the first name: ");
@@ -422,7 +423,9 @@ void addNewContact()
                 removeSpaces(contact.lastName);
                 removeSpaces(contact.cityName);
                 fprintf(pF, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                printf("Success: Contact details added in the record. \n");
+                printf("---------------------------------------------- \n");
+                printf("Success: Contact details added in the record.  \n");
+                printf("---------------------------------------------- \n");
             }
             else
                 flag = 1;
@@ -432,7 +435,7 @@ void addNewContact()
         printf("ERROR: Unable to locate or open the file. \n");
 
     fclose(pF);
-    if(flag == 1 && len == 0)
+    if(flag == 1 && len == 0)  // if the phoneNumber entered is invalid it wil execute 
     {
         printf("------------------------------------------------------- \n");
         printf("ERROR: Invalid input for phone number try again later.  \n");
@@ -447,7 +450,7 @@ void updateContact()
     clearBuffer();
     system("title Update Contact");
     char confirmDelete[MAX_LENGTH];
-    int flag = 0;
+    int flag = 0, counter = 1;
 
     printf("----------------------------- \n");
     printf("   >>> Update Contact <<< \n");
@@ -456,7 +459,7 @@ void updateContact()
     gets(findNumber);
     printf("\n");
 
-    if(isValidNumeric(findNumber) == 4)
+    if(isValidNumeric(findNumber) == 4)  // checks for each character of the number 
         invalidInput(ADMIN_CODE);
 
     pF = fopen("ContactList.txt", "r");
@@ -466,8 +469,16 @@ void updateContact()
     {
         if(strcmp(findNumber, contact.findNum) == 0)
         {
+            // if there two contacts will same phoneNumber it will pop alert message 
+            if(counter >= 2)
+                printf("\n\t\tALERT: We found another contact with the same phone number.\n\t\t\tPlease review it too.\n\n");
+            
+            printf("\t\t|===============================================================| \n");
+            printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+            printf("\t\t|===============================================================| \n");
+            printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n\n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
             printf("--------------------------------------------------- \n");
-            printf("> Contact Found in records. Enter the new details.\n");
+            printf("> Contact Found in records. Enter the new details.  \n");
             printf("--------------------------------------------------- \n");
             fflush(stdin);
             printf("Enter the first name: ");
@@ -485,39 +496,47 @@ void updateContact()
             
             printf("Enter the phone number [+91]: ");
             gets(copy.findNum);
-            printf("\n");
 
             fflush(stdin);
-            printf("Type `CONFIRM` to update this details: ");
-            gets(confirmDelete);
-
             printf("\n");
-            if(strcmp(confirmDelete, "CONFIRM") == 0)
+            removeSpaces(copy.findNum);
+            if(isValidGender(&copy.gender))
             {
-                removeSpaces(copy.findNum);
-                if(isValidGender(&copy.gender))
+                if(isValidNumeric(copy.findNum) == 1)
                 {
-                    if(isValidNumeric(copy.findNum) == 1)
+                    printf("Type `CONFIRM` to update this details: ");
+                    gets(confirmDelete);
+                    if(strcmp(confirmDelete, "CONFIRM") == 0)
                     {
+                        // validates everything and fetchs into file 
                         removeSpaces(copy.firstName);
                         removeSpaces(copy.lastName);
                         removeSpaces(copy.cityName);
+                        printf("\nProcessing . . . \n\n");
                         fprintf(pT, "%s %s %c %s %s\n",copy.firstName, copy.lastName, copy.gender, copy.findNum, copy.cityName);
                         flag = 2;
                     }
                     else
+                    {
+                        flag = 1;
                         fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
+                    }
                 }
                 else
                 {
                     fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                    flag = 3;
+                    if(len == 0)
+                    {
+                        printf("--------------------------------------------- \n");
+                        printf("ERROR: Invalid input please try again later.  \n");
+                        printf("--------------------------------------------- \n");
+                    }
                 }
             }
             else
             {
-                flag = 1;
                 fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
+                flag = 3;
             }
         }
         else
@@ -542,7 +561,7 @@ void updateContact()
     pT = fopen("temporary.txt", "w");
     fclose(pT);
 
-    if(flag == 0 && len == 10)
+    if(flag == 0 && len == 10)  // return different error messages upon the flag value 
     {
         printf("----------------------------------------- \n");
         printf("> No contacts found matching your input.  \n");
@@ -589,7 +608,7 @@ void deleteContact()
     {
         if(strcmp(findNumber, contact.findNum) == 0)
         {
-            if(counter == 2)
+            if(counter >= 2)
                 printf("\n\t\tALERT: We found another contact with the same phone number.\n\t\t\tPlease review it too.\n\n");
             
             printf("\t\t|===============================================================| \n");
@@ -604,12 +623,12 @@ void deleteContact()
 
             if(strcmp(confirmDelete, "CONFIRM") == 0)
             {
-                printf("\n\t\tProcessing . . . \n");
+                printf("\n\t\tProcessing . . . \n\n");
                 flag = 2;
             }
             else
             {
-                printf("\n\t\tProcessing . . . \n");
+                printf("\n\t\tProcessing . . . \n\n");
                 fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
             }
         }
