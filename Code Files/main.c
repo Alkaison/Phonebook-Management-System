@@ -708,7 +708,7 @@ void searchByName(int entryCode)
     clearBuffer();
     system("title Search By Name");
     char findName[MAX_LENGTH];
-    int compare = 1, flag = 0;
+    int compare = 1, flag = 0, counter = 1;
 
     printf("----------------------------- \n");
     printf("   >>> Search By Name <<<     \n");
@@ -737,15 +737,21 @@ void searchByName(int entryCode)
         
         if(compare == 0)
         {
-            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
-            printf("> Gender: %c \n", contact.gender);
-            printf("> City: %s \n", contact.cityName);
-            printf("> Phone Number: %s \n", contact.findNum);
-            printf("----------------------------- \n");
+            if(counter == 1)
+            {
+                printf("\t\t|===============================================================| \n");
+                printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+                printf("\t\t|===============================================================| \n");
+            }
+            printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
             flag++;
         }
     }
     fclose(pF);
+
+    if(counter > 1)
+        printf("\t\t|===============================================================| \n\n");
+
     if(flag == 0)
     {
         printf("----------------------------------------- \n");
@@ -760,7 +766,7 @@ void searchByNumber(int entryCode)
 {
     clearBuffer();
     system("title Search By Number");
-    int flag = 0;
+    int flag = 0, counter = 1;
 
     printf("------------------------------- \n");
     printf("   >>> Search By Number <<< \n");
@@ -780,15 +786,21 @@ void searchByNumber(int entryCode)
     {
         if(strcmp(findNumber, contact.findNum) == 0)
         {
-            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
-            printf("> Gender: %c \n", contact.gender);
-            printf("> City: %s \n", contact.cityName);
-            printf("> Phone Number: %s \n", contact.findNum);
-            printf("----------------------------- \n");
+            if(counter == 1)
+            {
+                printf("\t\t|===============================================================| \n");
+                printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+                printf("\t\t|===============================================================| \n");
+            }
+            printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
             flag++;
         }
     }
     fclose(pF);
+
+    if(counter > 1)
+        printf("\t\t|===============================================================| \n\n");
+
     if(flag == 0)
     {
         printf("----------------------------------------- \n");
@@ -804,7 +816,7 @@ void searchByCity(int entryCode)
     clearBuffer();
     system("title Search By City Name");
     char findCity[MAX_LENGTH];
-    int compare = 1, flag = 0;
+    int compare = 1, flag = 0, counter = 1;
 
     printf("----------------------------- \n");
     printf("   >>> Search By City <<<     \n");
@@ -826,19 +838,25 @@ void searchByCity(int entryCode)
     pF = fopen("ContactList.txt", "r");
     while(fscanf(pF, "%s %s %c %s %s\n",contact.firstName, contact.lastName, &contact.gender, contact.findNum, contact.cityName) != EOF)
     {
-        compare = strcmp(findCity, contact.firstName);
+        compare = strcmp(findCity, contact.cityName);
         
         if(compare == 0)
         {
-            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
-            printf("> Gender: %c \n", contact.gender);
-            printf("> City: %s \n", contact.cityName);
-            printf("> Phone Number: %s \n", contact.findNum);
-            printf("----------------------------- \n");
+            if(counter == 1)
+            {
+                printf("\t\t|===============================================================| \n");
+                printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+                printf("\t\t|===============================================================| \n");
+            }
+            printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
             flag++;
         }
     }
     fclose(pF);
+
+    if(counter > 1)
+        printf("\t\t|===============================================================| \n\n");
+
     if(flag == 0)
     {
         printf("----------------------------------------- \n");
