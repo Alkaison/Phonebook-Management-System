@@ -570,7 +570,7 @@ void deleteContact()
     clearBuffer();
     system("title Delete Contact");
     char confirmDelete[MAX_LENGTH];
-    int flag = 0;
+    int flag = 0, counter = 1;
 
     printf("----------------------------- \n");
     printf("   >>> Delete Contact <<< \n");
@@ -589,22 +589,29 @@ void deleteContact()
     {
         if(strcmp(findNumber, contact.findNum) == 0)
         {
-            printf("> Name: %s %s \n", contact.firstName, contact.lastName);
-            printf("> Gender: %c \n", contact.gender);
-            printf("> City: %s \n", contact.cityName);
-            printf("> Phone Number: %s \n", contact.findNum);
-            printf("----------------------------- \n\n");
+            if(counter == 2)
+                printf("\n\t\tALERT: We found another contact with the same phone number.\n\t\t\tPlease review it too.\n\n");
+            
+            printf("\t\t|===============================================================| \n");
+            printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+            printf("\t\t|===============================================================| \n");
+            printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
 
             fflush(stdin);
             flag = 1;
-            printf("Type `CONFIRM` to delete this contact: ");
+            printf("\nType `CONFIRM` to delete this contact: ");
             gets(confirmDelete);
 
-            printf("\n");
             if(strcmp(confirmDelete, "CONFIRM") == 0)
+            {
+                printf("\n\t\tProcessing . . . \n");
                 flag = 2;
+            }
             else
+            {
+                printf("\n\t\tProcessing . . . \n");
                 fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
+            }
         }
         else
             fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
@@ -670,10 +677,16 @@ void deleteAllContact()
     {
         pF = fopen("ContactList.txt", "w");  // erases everything from file and then save it 
         fclose(pF);
+        printf("------------------------------------------- \n");
         printf("Success: All contact details are deleted. \n");
+        printf("------------------------------------------- \n");
     }
     else
+    {
+        printf("----------------------------------------- \n");
         printf("ERROR: Invalid message try again later. \n");
+        printf("----------------------------------------- \n");
+    }
     
     system("pause");
     adminPanel();
