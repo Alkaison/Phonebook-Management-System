@@ -1,13 +1,16 @@
 /*
     Project Title: Phonebook Management System 
     Language: C 
+    GitHub Repository: https://github.com/Alkaison/Phonebook-Management-System 
+    BSc IT Course => Project for Semester-1  
     Concepts: File Handling, Struct, Define, etc. 
 */
 #include<stdio.h>  // almost everything 
 #include<stdlib.h>  // system() 
 #include<string.h>  // strcmp(), strlen() 
 #include<conio.h>  // getch() 
-#include<windows.h>  // Sleep() 
+#include<windows.h>  // Sleep() => for windows OS 
+#include<unistd.h>  // for linux or Mac OS 
 #include<ctype.h>  // isdigit(), isaplha() 
 
 // define constants -> is used to define the constant or the micro substitution 
@@ -51,6 +54,7 @@ void adminPanel();
 int isValidGender(char *gender);  // checks for the gender input 
 int isValidNumeric(char num[]);  // checks for the phone number input 
 int isValidName(char *name);  // checks string for searchByCity & searchByName  
+int checkNumberExistence(char *num);  // checks for the input number if its exists in the database or not 
 char *removeSpaces(char *str);  // removes empty spaces from name inputs 
 void invalidInput(int);  // shows error on invalid inputs and returns them back to the panel 
 void clearBuffer();  // clears the output screen & input buffer 
@@ -135,7 +139,11 @@ void endScreen()
     printf("\n\t\t\t\t------------------------------------------ \n");
     printf("\t\t\t\t   >>> Phonebook Management System <<<     \n");
     printf("\t\t\t\t------------------------------------------ \n\n");
-    printf("\t\t\t\t\t\tThank You. \n\n");
+    printf("\t\t\t\tGitHub: https://github.com/Alkaison \n");
+    printf("\t\t\t\tTwitter: https://twitter.com/Alkaison \n");
+    printf("\t\t\t\tLinkedIn: https://linkedin.com/in/Alkaison \n\n");
+    printf("\t\t\t\t------------------------------------------ \n");
+    printf("\t\t\t\t\t\tThank You. \n");
     printf("\t\t\t\t------------------------------------------ \n\n");
     Sleep(1500);  // pause the screen for 3 seconds 
     exit(0);  // ends the program safely 
@@ -354,6 +362,22 @@ int isValidNumeric(char num[])
     return 0;
 }
 
+int checkNumberExistence(char *num)  // checks for the input number if its exists in the database or not 
+{
+    FILE *pT = fopen("ContactList.txt","r");
+
+    while(fscanf(pT, "%s %s %c %s %s\n",copy.firstName, copy.lastName, &copy.gender, copy.findNum, copy.cityName) != EOF)
+    {
+        if(strcmp(num, copy.findNum) == 0)
+        {
+            fclose(pT);
+            return 0;
+        }
+    }
+    fclose(pT);
+    return 1;
+}
+
 void invalidInput(int entryCode)
 {
     printf("--------------------------------------------- \n");
@@ -419,13 +443,22 @@ void addNewContact()
         {
             if(isValidNumeric(contact.findNum) == 1)
             {
-                removeSpaces(contact.firstName);
-                removeSpaces(contact.lastName);
-                removeSpaces(contact.cityName);
-                fprintf(pF, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                printf("---------------------------------------------- \n");
-                printf("Success: Contact details added in the record.  \n");
-                printf("---------------------------------------------- \n");
+                if(checkNumberExistence(contact.findNum))
+                {
+                    removeSpaces(contact.firstName);
+                    removeSpaces(contact.lastName);
+                    removeSpaces(contact.cityName);
+                    fprintf(pF, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
+                    printf("---------------------------------------------- \n");
+                    printf("Success: Contact details added in the record.  \n");
+                    printf("---------------------------------------------- \n");
+                }
+                else
+                {
+                    printf("---------------------------------------------------- \n");
+                    printf("ERROR: Phone number already exists in the database. \n");
+                    printf("---------------------------------------------------- \n");
+                }
             }
             else
                 flag = 1;
@@ -490,53 +523,25 @@ void updateContact()
             printf("Enter the city name: ");
             gets(copy.cityName);
 
-            printf("Enter the gender [M/F]: ");
-            scanf(" %c",&copy.gender);
-            fflush(stdin);
-            
-            printf("Enter the phone number [+91]: ");
-            gets(copy.findNum);
-
             fflush(stdin);
             printf("\n");
-            removeSpaces(copy.findNum);
-            if(isValidGender(&copy.gender))
+
+            printf("Type `CONFIRM` to update this details: ");
+            gets(confirmDelete);
+            if(strcmp(confirmDelete, "CONFIRM") == 0)
             {
-                if(isValidNumeric(copy.findNum) == 1)
-                {
-                    printf("Type `CONFIRM` to update this details: ");
-                    gets(confirmDelete);
-                    if(strcmp(confirmDelete, "CONFIRM") == 0)
-                    {
-                        // validates everything and fetchs into file 
-                        removeSpaces(copy.firstName);
-                        removeSpaces(copy.lastName);
-                        removeSpaces(copy.cityName);
-                        printf("\nProcessing . . . \n\n");
-                        fprintf(pT, "%s %s %c %s %s\n",copy.firstName, copy.lastName, copy.gender, copy.findNum, copy.cityName);
-                        flag = 2;
-                    }
-                    else
-                    {
-                        flag = 1;
-                        fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                    }
-                }
-                else
-                {
-                    fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                    if(len == 0)
-                    {
-                        printf("--------------------------------------------- \n");
-                        printf("ERROR: Invalid input please try again later.  \n");
-                        printf("--------------------------------------------- \n");
-                    }
-                }
+                // validates everything and fetchs into file 
+                removeSpaces(copy.firstName);
+                removeSpaces(copy.lastName);
+                removeSpaces(copy.cityName);
+                printf("\nProcessing . . . \n\n");
+                fprintf(pT, "%s %s %c %s %s\n",copy.firstName, copy.lastName, contact.gender, contact.findNum, copy.cityName);
+                flag = 2;
             }
             else
             {
+                flag = 1;
                 fprintf(pT, "%s %s %c %s %s\n", contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
-                flag = 3;
             }
         }
         else
@@ -721,14 +726,22 @@ void displayContact(int entryCode)
     printf("\t\t\t\t---------------------------- \n\n");
     pF = fopen("ContactList.txt", "r");
 
-    printf("\t\t|===============================================================| \n");
-    printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
-    printf("\t\t|===============================================================| \n");
+    if(fscanf(pF, "%s %s %c %s %s\n",contact.firstName, contact.lastName, &contact.gender, contact.findNum, contact.cityName) != EOF)
+    {
+        printf("\t\t|===============================================================| \n");
+        printf("\t\t|ID| \tName\t\t| Gender | Phone Number\t| City Name\t| \n");
+        printf("\t\t|===============================================================| \n");
 
-    while(fscanf(pF, "%s %s %c %s %s\n",contact.firstName, contact.lastName, &contact.gender, contact.findNum, contact.cityName) != EOF)
-        printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
+        do
+        {
+            printf("\t\t| %d| %s %s \t| %c |\t %s \t| %s \t| \n", counter++, contact.firstName, contact.lastName, contact.gender, contact.findNum, contact.cityName);
 
-    printf("\t\t|===============================================================| \n\n");
+        } while(fscanf(pF, "%s %s %c %s %s\n",contact.firstName, contact.lastName, &contact.gender, contact.findNum, contact.cityName) != EOF);
+
+        printf("\t\t|===============================================================| \n\n");
+    }
+    else
+        printf(" ERROR: Either we are unable to locate the ContactList.txt file or\n\t there are no contacts saved in the file. \n\n");
 
     fclose(pF);
     system("pause");

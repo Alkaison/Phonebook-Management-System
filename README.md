@@ -6,7 +6,7 @@ Phonebook Management System in the C programming language is a software applicat
 ## Description
 
 You can learn the fundamentals of functions, file handling, and data 
-structure by working on the Phonebook Management System mini-project. 
+structure by working on the Phonebook Management System. 
 This system will show you how to add, list, change or edit, search for, and 
 remove data from/to a file. The functions that make up this project's menu 
 include adding new records, listing them, editing and updating them, looking 
@@ -14,11 +14,11 @@ for saved contacts, and deleting phonebook entries.
 
 ## Documents 
 
-- Synopsis report [here](/Documents/PhonebookManagementSystem_Synopsis.pdf)
-- Use case diagram [here](/Documents/PhonebookManagementSystem_UseCaseDiagram.pdf)
+- Synopsis report [here](/Documents/PhonebookManagementSystem_Synopsis.pdf "Synopsis Report")
+- Use case diagram [here](/Documents/PhonebookManagementSystem_UseCaseDiagram.pdf "Use Case Diagram")
 - Output Images [here](/Images/)
 
-**Note:** If the documents are not rendering on github please download the repository [here](https://github.com/Alkaison/Phonebook-Management-System/archive/refs/heads/main.zip). 
+**Note:** If the documents are not rendering on github please download the repository [here](https://github.com/Alkaison/Phonebook-Management-System/archive/refs/heads/main.zip "Latest Code"). 
 
 ## Features 
 
@@ -28,11 +28,14 @@ We have used many functions in this project. These functions are very easy to un
 - Secure Password Login
 - Admin Panel
 - User Panel
+- Unique phone numbers
+- Advance validation function for user input 
 - Add New Contact
 - Update Contact
 - Display All Contact
 - Search By Name
 - Search By Number
+- Search By City 
 - Delete Contact
 - Delete All Contact
 
@@ -42,59 +45,79 @@ We have used many functions in this project. These functions are very easy to un
 
 - A software (IDE) for reviewing the code
 - C/C++ compiler (Recommended: GCC Compiler)
-- Command Prompt or Windows Powershell
+- Command Prompt or Windows Powershell 
 
 **Note:** This program won't run on online compilers as they don't provide libraries for FILE Management & external storing.
 
+## Contributing 
+
+- If you wish to contribute a new function or want to improve the code quality, you are welcome for your contributions. 
+
+- Fork the repository & make changes, after completion open pull request.
+
+- Thanks in advance 💛 
+
 ## Screenshots 🖼️
 
-### 01. Information Page
+### 01. Introduction Screen 
 
-![Information Page](https://i.ibb.co/T8thjdf/PMS-01-Information-Page.png)
+![Information Page](https://i.ibb.co/rktHD2C/PMS-01-Introduction-Screen.png)
 
-### 02. Login Page
+### 02. Login Screen 
 
-![Login Page](https://i.ibb.co/BfqPzCL/PMS-02-Login-Page.png)
+![Login Page](https://i.ibb.co/vYn8Fnm/PMS-02-Login-Screen.png)
 
 ### 03. Secure Password Login
 
-![Secure Password Login](https://i.ibb.co/kJT6R4J/PMS-03-Secure-Password.png)
+![Secure Password Login](https://i.ibb.co/KzPmpFF/PMS-03-Admin-Login-Secure.png)
 
 ### 04. Admin Panel
 
-![Admin Panel](https://i.ibb.co/BNP4Rns/PMS-04-Admin-Panel.png)
+![Admin Panel](https://i.ibb.co/Fb0gfXv/PMS-04-Admin-Panel.png)
 
 ### 05. User Panel
 
-![User Panel](https://i.ibb.co/FqZ35cm/PMS-05-User-Panel.png)
+![User Panel](https://i.ibb.co/743mZbx/PMS-05-User-Panel.png)
 
 ### 06. Add New Contact
 
-![Add New Contact](https://i.ibb.co/nfR06x6/PMS-06-Add-New-Contact.png)
+![Add New Contact](https://i.ibb.co/YtvXhJs/PMS-06-Add-New-Contact.png)
 
 ### 07. Update Contact
 
-![Update Contact](https://i.ibb.co/vkh7bYF/PMS-07-Update-Contact.png)
+![Update Contact](https://i.ibb.co/vvvXRhh/PMS-07-Update-Contact.png)
 
 ### 08. Display All Contact
 
-![Display All Contact](https://i.ibb.co/vJCXBsw/PMS-08-Display-All-Contacts.png)
+![Display All Contact](https://i.ibb.co/p2x9cvx/PMS-08-Display-All-Contacts.png)
 
 ### 09. Search By Name
 
-![Search By Name](https://i.ibb.co/CtvLXSH/PMS-09-Search-By-Name.png)
+![Search By Name](https://i.ibb.co/3MGKWmn/PMS-09-Seach-By-Name.png)
 
 ### 10. Search By Number
 
-![Search By Number](https://i.ibb.co/WsRSZjK/PMS-10-Search-By-Number.png)
+![Search By Number](https://i.ibb.co/0tL532S/PMS-10-Search-By-Number.png)
 
-### 11. Delete Contact
+### 11. Search By City Name 
 
-![Delete Contact](https://i.ibb.co/1zzcpcQ/PMS-11-Delete-Contact.png)
+![Search By City Name](https://i.ibb.co/hyXZMhd/PMS-11-Search-By-City-Name.png)
 
-### 12. Delete All Contact
+### 12. Delete Contact
 
-![Delete All Contact](https://i.ibb.co/Smbmhb9/PMS-12-Delete-All-Contact.png)
+![Delete Contact](https://i.ibb.co/6DYFThb/PMS-12-Delete-Contact.png)
+
+### 13. Delete All Contact
+
+![Delete All Contact](https://i.ibb.co/BP5CdYT/PMS-13-Delete-All-Contacts.png)
+
+### 14. No Contacts Error 
+
+![No Contacts Error](https://i.ibb.co/LSzLfZ8/PMS-14-No-Contact-Error.png)
+
+### 15. Exit Screen 
+
+![Exit Screen](https://i.ibb.co/N3z5qqM/PMS-15-Exit-Screen.png)
 
 ## MIT LICENSE 📔
 
